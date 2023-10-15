@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Пример ProZorro</title>
+</head>
+<body>
+    <h1>Данные ProZorro</h1>
+    <ul>
+        {% for item in prozorro_data.data %}
+            <li>{{ item.title }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
