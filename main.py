@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request
 import requests
 
-app = Flask(__name)
+app = Flask(__name__)
 
 # Функция для получения данных с API ProZorro
 def get_prozorro_data():
-    api_url = "https://prozorro.gov.ua/api/2.5/tenders"
+    api_url = "https://staging.prozorro.gov.ua//api/2.5/tenders"
 
     # Здесь вы можете настроить параметры запроса в соответствии с вашими требованиями
     params = {
