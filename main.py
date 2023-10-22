@@ -2,11 +2,15 @@ import csv
 import json
 import os
 import time
+from dotenv import load_dotenv
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
-from config import CODE_EDRPOU as code_e
+#from config import CODE_EDRPOU as code_e
 
+load_dotenv()
+
+code_e = os.getenv("U_CODE_EDRPOU")
 
 
 
@@ -15,13 +19,13 @@ def get_all_pages():
         "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
     }
 
-    # r = requests.get(url='https://www.dzo.com.ua/tenders/current?&filter%5Bidentifiers%5D={code_e}', headers=headers)
+    r = requests.get(url=f'https://www.dzo.com.ua/tenders/current?&filter%5Bidentifiers%5D={code_e}', headers=headers)
     
-    # if not os.path.exists("data"):
-    #     os.mkdir("data")
+    if not os.path.exists("data"):
+        os.mkdir("data")
 
-    # with open("data/page_1.html", "w", encoding="utf-8") as file:
-    #     file.write(r.text)
+    with open("data/page_1.html", "w", encoding="utf-8") as file:
+        file.write(r.text)
 
     with open("data/page_1.html", encoding="utf-8") as file:
          src = file.read()
@@ -112,7 +116,7 @@ def collect_data(pages_count):
                         t_method
                     )
                 )
-        print(f"[INFO] Обработана страница {page}/{pages_count}")
+        print(f"[INFO] Обработана страница {page}/({pages_count}-1)")
         time.sleep(3)
     with open(f"data_{cur_date}.json", "a") as file:
         json.dump(data, file, indent=4, ensure_ascii=False) 
