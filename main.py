@@ -41,14 +41,15 @@ def get_all_pages():
         r = requests.get(url=url, headers=headers)
         with open (f"data/page_{i}.html", "w", encoding="utf-8") as file:
             file.write(r.text)
-        time.sleep(2)
+        time.sleep(3)
+        print(f"[INFO] Скачено страниц {i}/{pages_count}")
     return pages_count + 1 
 
 
 def collect_data(pages_count):
     cur_date = datetime.now().strftime("%d_%m_%Y")
 
-    with open(f"data_{cur_date}.csv", "w") as file:
+    with open(f"data_{cur_date}.csv", "w", encoding="utf-8") as file:
         writer = csv.writer(file)
 
         writer.writerow(
@@ -100,7 +101,7 @@ def collect_data(pages_count):
                     "t_method": t_method
                 }
             )
-            with open(f"data_{cur_date}.csv", "a") as file:
+            with open(f"data_{cur_date}.csv", "a", encoding="utf-8") as file:
                 writer = csv.writer(file)
 
                 writer.writerow(
@@ -116,9 +117,9 @@ def collect_data(pages_count):
                         t_method
                     )
                 )
-        print(f"[INFO] Обработана страница {page}/({pages_count}-1)")
+        print(f"[INFO] Обработана страница {page}/{pages_count}")
         time.sleep(3)
-    with open(f"data_{cur_date}.json", "a") as file:
+    with open(f"data_{cur_date}.json", "a", encoding="utf-8") as file:
         json.dump(data, file, indent=4, ensure_ascii=False) 
 
 def main():
