@@ -1,12 +1,38 @@
+import os
 import requests
-import json
+from bs4 import BeautifulSoup
 
 
-def get_prozorro_data():
-    url = 'http://lb-api-sandbox.prozorro.gov.ua/api/2.5/tenders/'
-    data = requests.get(url).text
-    return data
 
-result = get_prozorro_data()
-print(result)
 
+def get_all_pages():
+    headers = {
+        "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
+    }
+
+    # r = requests.get(url='https://www.dzo.com.ua/tenders/current?&filter%5Bidentifiers%5D=00022504', headers=headers)
+    #             #    https://www.dzo.com.ua/tenders/current?filter%5Bsearch%5D=&filter%5Bobject%5D=title
+    #             #    &filter%5Boperator%5D=and&filter%5Bidentifiers_search%5D=&filter%5Bidentifiers%5D=00022504
+    #             #    &filter%5Bclassification%5D=&filter%5BmainProcurementCategory%5D=&filter%5Bmilestones_code%5D=
+    #             #    &filter%5Btender_value_amount%5D%5Bstart%5D=&filter%5Btender_value_amount%5D%5Bend%5D=
+    #             #    &filter%5BtenderPeriod%5D%5Bstart%5D=&filter%5BtenderPeriod%5D%5Bend%5D=&filter%5Bauction%5D%5Bstart%5D=
+    #             #    &filter%5Bauction%5D%5Bend%5D=&filter%5BpubDate%5D%5Bstart%5D=&filter%5BpubDate%5D%5Bend%5D=
+    #             #    &filter%5Border%5D=pubDate_desc&formname=filter
+    # if not os.path.exists("data"):
+    #     os.mkdir("data")
+
+    # with open("data/page_1.html", "w", encoding="utf-8") as file:
+    #     file.write(r.text)
+
+    with open("data/page_1.html", encoding="utf-8") as file:
+        src = file.read()
+    soup = BeautifulSoup(src, 'lxml')
+    pages_count = soup.find('div', class_="pages relative clear").find_all('a')[-1].text
+    print(pages_count)
+
+
+def main():
+    get_all_pages()
+
+if __name__ == '__main__':
+    main()
