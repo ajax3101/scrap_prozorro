@@ -36,7 +36,7 @@ def get_all_pages():
     pages_count = int(soup.find('div', class_="pages relative clear").find_all('a')[-1].text)
     #print(pages_count)
     
-    for i in range(1, pages_count + 1):
+    for i in range(1, 2):
         url = f"https://www.dzo.com.ua/tenders/current?filter%5Bidentifiers%5D=00022504&page={i}"
         #print(url)
         r = requests.get(url=url, headers=headers)
@@ -46,11 +46,36 @@ def get_all_pages():
     return pages_count + 1 
 
 
+def collect_data(pages_count):
+    for page in range(1, pages_count):
+        with open(f"data/page_{page}.html", encoding="utf-8" ) as file:
+            src = file.read()
+
+        soup = BeautifulSoup(src, "lxml")
+        items_cards = soup.find_all("div", class_="item relative")
+
+        for item in items_cards:
+            t = item.find("h2", class_="title").text
+            tl = 'https://www.dzo.com.ua' + item.find('a', class_="globalLink").get('href')
+            cpv = item.find("div", class_="cpv cd").text
+
+            v = item.find("div", class_="newkvaziName clear").text
+            a = item.find("div", class_="newauction").text
+            s = item.find("div", class_="newstatus").text
+            t_id = item.find("div", class_="cd newtenderId").text
+            cdb = item.find("div", class_="cd newtenderMethod CDB_Number").text
+            t_method = item.find("div", class_="cd newtenderMethod").text
+
+            print(f"Tender: {t} - URL: {tl} - INFO: {cpv} - V: {v} - A: {a} - S: {s} - T-ID: {t_id} - CDB: {cdb} - T_M: {t_method}")
 
 
+        print(f"Обработана {page}/{pages_count}")
+        time.sleep(3)
+     
 
 def main():
     pages_count =  get_all_pages()
+    collect_data(pages_count=pages_count)
 
 if __name__ == '__main__':
     main()
