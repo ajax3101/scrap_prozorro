@@ -1,11 +1,11 @@
-# Telegram bot прогноза погоди
+# Працюємо з API Prozorro та бібліотекою requests
 [![Python Version](https://img.shields.io/badge/python-3.11-brightgreen.svg)](https://python.org)
 
 Простий сайт на Python за допомогою Flask/Django. 
 Працюємо з API Prozorro  та бібліотекою requests. 
 Парсим JSON дані.
 
-![Chat Weather Telegram Bot ](/image.png)
+![Працюємо з API Prozorro та бібліотекою requests](/image.png)
 
 Клонуємо репо
 
