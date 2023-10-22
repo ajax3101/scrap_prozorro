@@ -112,10 +112,10 @@ def collect_data(pages_count):
                         t_method
                     )
                 )
-
         print(f"[INFO] Обработана страница {page}/{pages_count}")
         time.sleep(3)
-     
+    with open(f"data_{cur_date}.json", "a") as file:
+        json.dump(data, file, indent=4, ensure_ascii=False) 
 
 def main():
     pages_count =  get_all_pages()
