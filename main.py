@@ -1,6 +1,10 @@
+import csv
+import json
 import os
+import time
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 
 
@@ -25,14 +29,28 @@ def get_all_pages():
     #     file.write(r.text)
 
     with open("data/page_1.html", encoding="utf-8") as file:
-        src = file.read()
+         src = file.read()
+    
     soup = BeautifulSoup(src, 'lxml')
-    pages_count = soup.find('div', class_="pages relative clear").find_all('a')[-1].text
-    print(pages_count)
+    
+    pages_count = int(soup.find('div', class_="pages relative clear").find_all('a')[-1].text)
+    #print(pages_count)
+    
+    for i in range(1, pages_count + 1):
+        url = f"https://www.dzo.com.ua/tenders/current?filter%5Bidentifiers%5D=00022504&page={i}"
+        #print(url)
+        r = requests.get(url=url, headers=headers)
+        with open (f"data/page_{i}.html", "w", encoding="utf-8") as file:
+            file.write(r.text)
+        time.sleep(2)
+    return pages_count + 1 
+
+
+
 
 
 def main():
-    get_all_pages()
+    pages_count =  get_all_pages()
 
 if __name__ == '__main__':
     main()
