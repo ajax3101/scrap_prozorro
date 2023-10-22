@@ -15,13 +15,7 @@ def get_all_pages():
     }
 
     # r = requests.get(url='https://www.dzo.com.ua/tenders/current?&filter%5Bidentifiers%5D=00022504', headers=headers)
-    #             #    https://www.dzo.com.ua/tenders/current?filter%5Bsearch%5D=&filter%5Bobject%5D=title
-    #             #    &filter%5Boperator%5D=and&filter%5Bidentifiers_search%5D=&filter%5Bidentifiers%5D=00022504
-    #             #    &filter%5Bclassification%5D=&filter%5BmainProcurementCategory%5D=&filter%5Bmilestones_code%5D=
-    #             #    &filter%5Btender_value_amount%5D%5Bstart%5D=&filter%5Btender_value_amount%5D%5Bend%5D=
-    #             #    &filter%5BtenderPeriod%5D%5Bstart%5D=&filter%5BtenderPeriod%5D%5Bend%5D=&filter%5Bauction%5D%5Bstart%5D=
-    #             #    &filter%5Bauction%5D%5Bend%5D=&filter%5BpubDate%5D%5Bstart%5D=&filter%5BpubDate%5D%5Bend%5D=
-    #             #    &filter%5Border%5D=pubDate_desc&formname=filter
+    
     # if not os.path.exists("data"):
     #     os.mkdir("data")
 
