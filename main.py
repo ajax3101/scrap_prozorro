@@ -47,7 +47,22 @@ def get_all_pages():
 
 
 def collect_data(pages_count):
-    for page in range(1, pages_count):
+    # cur_date = datetime.now().strftime("%d_%m_%Y")
+
+    # with open(f"data_{cur_date}.csv", "w") as file:
+    #     writer = csv.writer(file)
+
+    #     writer.writerow(
+    #         (
+    #             "Tender",
+    #             "URL",
+    #             "CPV"
+    #         )
+    #     )
+
+    # data = []
+        
+    for page in range(1, 2):
         with open(f"data/page_{page}.html", encoding="utf-8" ) as file:
             src = file.read()
 
@@ -59,14 +74,14 @@ def collect_data(pages_count):
             tl = 'https://www.dzo.com.ua' + item.find('a', class_="globalLink").get('href')
             cpv = item.find("div", class_="cpv cd").text
 
-            v = item.find("div", class_="newkvaziName clear").text
-            a = item.find("div", class_="newauction").text
-            s = item.find("div", class_="newstatus").text
-            t_id = item.find("div", class_="cd newtenderId").text
-            cdb = item.find("div", class_="cd newtenderMethod CDB_Number").text
-            t_method = item.find("div", class_="cd newtenderMethod").text
+            v = item.find("div", class_="newkvaziName clear").find_next('span').find_next('span').text.rstrip(' Гривня')
+            a = item.find("div", class_="newauction").find_next('span').find_next('span').text
+            s = item.find("div", class_="newstatus").find_next('span').find_next('span').text
+            t_id = item.find("div", class_="cd newtenderId").find_next('span').find_next('span').text
+            cdb = item.find("div", class_="cd newtenderMethod CDB_Number").find_next('span').find_next('span').text
+            t_method = item.find("div", class_="cd newtenderMethod").find_next('span').find_next('span').text
 
-            print(f"Tender: {t} - URL: {tl} - INFO: {cpv} - V: {v} - A: {a} - S: {s} - T-ID: {t_id} - CDB: {cdb} - T_M: {t_method}")
+            print(f"Tender: {t} - URL: {tl} - INFO: {cpv} - Очікувана вартість закупівлі: {v} - Дата оголошення процедури: {a} - Поточний статус процедури: {s} - Ідентифікатор закупівлі: {t_id} - Організатор закупівлі: {cdb} - Процедура закупівлі: {t_method}")
 
 
         print(f"Обработана {page}/{pages_count}")
