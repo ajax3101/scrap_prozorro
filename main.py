@@ -121,7 +121,10 @@ def collect_data(code_e):
                 formatted_date = a_datetime.strftime("%Y-%m-%d %H:%M:%S%z")
                 # Remove "`" symbol from the "Очікувана вартість закупівлі" field
                 v = v.replace("`", "")
-
+                # Additional check for empty values
+                if not any(value for value in (t, tl, cpv, v, formatted_date, s, t_id, cdb, t_method, code_e_value)):
+                    print(f"[WARNING] Empty values detected for edr_id={code_e_value}. Skipping...")
+                    continue
                 data.append(
                     {
                         "t": t,
@@ -137,7 +140,7 @@ def collect_data(code_e):
                     }
                 )
 
-                with open(csv_filename, "a", encoding="utf-8") as csv_file:
+                with open(csv_filename, "a", encoding="utf-8", newline="") as csv_file:
                     csv_writer = csv.writer(csv_file)
                     csv_writer.writerow(
                         (
