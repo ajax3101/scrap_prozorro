@@ -141,7 +141,7 @@ def collect_data(code_e):
                 )
 
                 with open(csv_filename, "a", encoding="utf-8", newline="") as csv_file:
-                    csv_writer = csv.writer(csv_file)
+                    csv_writer = csv.writer(csv_file, delimiter=";")
                     csv_writer.writerow(
                         (
                             t,
