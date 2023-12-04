@@ -116,13 +116,19 @@ def collect_data(code_e):
                 cdb = item.find("div", class_="cd newtenderMethod CDB_Number").find_next('span').find_next('span').text
                 t_method = item.find("div", class_="cd newtenderMethod").find_next('span').find_next('span').text
 
+                # Convert the date string to the desired format
+                a_datetime = datetime.strptime(a, "%d.%m.%Y %H:%M")
+                formatted_date = a_datetime.strftime("%Y-%m-%d %H:%M:%S%z")
+                # Remove "`" symbol from the "Очікувана вартість закупівлі" field
+                v = v.replace("`", "")
+
                 data.append(
                     {
                         "t": t,
                         "tl": tl,
                         "cpv": cpv,
                         "v": v,
-                        "a": a,
+                        "a": formatted_date,
                         "s": s,
                         "t_id": t_id,
                         "cdb": cdb,
@@ -139,7 +145,7 @@ def collect_data(code_e):
                             tl,
                             cpv,
                             v,
-                            a,
+                            formatted_date,
                             s,
                             t_id,
                             cdb,
@@ -149,7 +155,7 @@ def collect_data(code_e):
                     )
 
             print(f"[INFO] Обработана страница для edr_id={code_e_value}")
-            time.sleep(2)
+            # time.sleep(2)
 
     with open(json_filename, "w", encoding="utf-8") as json_file:
         json.dump(data, json_file, indent=4, ensure_ascii=False)
